@@ -1,9 +1,10 @@
 #pragma once
 
 #include <stdexcept>
+#include<iostream>
 #include <utility>
 #include "Allocator.h"
-
+using namepsace std;
 template <typename T>
 class DynamicArray{
 private:
@@ -65,6 +66,17 @@ public:
     size_t get_capacity() const{
         return capacity;
     }
+    
+    T& operator[](size_t index) {
+        if (index >= size) throw std::out_of_range("Index out of range");
+        return data[index];
+    }
+
+    const T& operator[](size_t index) const {
+        if (index >= size) throw std::out_of_range("Index out of range");
+        return data[index];
+    }
+
 
     void insert(size_t index,const T& value){
         if (index > size) {
@@ -92,12 +104,47 @@ public:
         } size--; 
     }
 
+    void clear() {
+        for (size_t i = 0; i < size; i++) {
+            allocator.Destroy(data + i);
+        }
+        size = 0;
+    }
+
+    void reverse() {
+        if (size <= 1) return;
+        size_t i = 0;
+        size_t j = size - 1;
+
+        while (i < j) {
+            T temp = std::move(data[i]);
+            data[i] = std::move(data[j]);
+            data[j] = std::move(temp);
+            i++;
+            j--;
+        }
+    }
+
+    int find(const T& value) {
+        for (size_t i = 0; i < size; i++) {
+            if (data[i] == value) {
+                return static_cast<int>(i);
+            }
+        }
+        return -1;
+    }
+
+    void print() {
+        for (size_t i = 0; i < size; i++) {
+            cout << data[i] << " ";
+        }
+        cout << "\n";
+    }
+    
     ~DynamicArray(){
         for(size_t i=0;i<size;i++){
             allocator.Destroy(data+i);
         }
         allocator.Deallocate(data);
     }
-
-
 };
