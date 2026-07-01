@@ -42,6 +42,24 @@ public:
 
     }
 
+    void append(const T& value){
+        if(size == capacity){
+            resize();
+        }
+        allocator.Construct(data + size, value);
+        size++;
+    }
+
+    void append(T&& value){
+        if(size == capacity){
+            resize();
+        }
+        allocator.Construct(data + size, std::move(value));
+        size++;
+    }
+
+
+
     ~DynamicArray(){
         for(size_t i=0;i<size;i++){
             allocator.Destroy(data+i);
