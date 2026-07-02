@@ -44,6 +44,36 @@ public:
 
     }
 
+    DynamicArray(const DynamicArray& other) {
+        size = other.size;
+        capacity = other.capacity;
+
+        data = allocator.Allocate(capacity);
+
+        for (size_t i = 0; i < size; i++) {
+            allocator.Construct(data + i, other.data[i]);
+        }
+    }
+
+    DynamicArray& operator=(const DynamicArray& other) {
+        if (this == &other)
+            return *this;
+
+        clear();
+        allocator.Deallocate(data);
+
+        size = other.size;
+        capacity = other.capacity;
+
+        data = allocator.Allocate(capacity);
+
+        for (size_t i = 0; i < size; i++) {
+            allocator.Construct(data + i, other.data[i]);
+        }
+
+        return *this;
+    }
+
     void append(const T& value){
         if(size == capacity){
             resize();
