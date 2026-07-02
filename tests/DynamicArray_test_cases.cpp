@@ -136,6 +136,77 @@ void test_resize() {
     cout << "Last element: " << arr[arr.get_size() - 1] << endl;
 }
 
+void test_copy_constructor() {
+    cout << "\n--- TEST COPY CONSTRUCTOR ---\n";
+
+    DynamicArray<int> arr;
+
+    arr.append(10);
+    arr.append(20);
+    arr.append(30);
+
+    DynamicArray<int> copy(arr);
+
+    cout << "Original: ";
+    arr.print();
+
+    cout << "Copy: ";
+    copy.print();
+
+    // Modify copy
+    copy[0] = 999;
+
+    cout << "\nAfter modifying copy\n";
+
+    cout << "Original: ";
+    arr.print();
+
+    cout << "Copy: ";
+    copy.print();
+}
+
+void test_copy_assignment() {
+    cout << "\n--- TEST COPY ASSIGNMENT ---\n";
+
+    DynamicArray<int> arr1;
+
+    arr1.append(1);
+    arr1.append(2);
+    arr1.append(3);
+
+    DynamicArray<int> arr2;
+
+    arr2.append(100);
+    arr2.append(200);
+
+    cout << "Before assignment\n";
+
+    cout << "arr1: ";
+    arr1.print();
+
+    cout << "arr2: ";
+    arr2.print();
+
+    arr2 = arr1;
+
+    cout << "\nAfter assignment\n";
+
+    cout << "arr1: ";
+    arr1.print();
+
+    cout << "arr2: ";
+    arr2.print();
+
+    arr2[1] = 999;
+
+    cout << "\nAfter modifying arr2\n";
+
+    cout << "arr1: ";
+    arr1.print();
+
+    cout << "arr2: ";
+    arr2.print();
+}
 // ----------------------
 // MAIN
 // ----------------------
@@ -144,7 +215,8 @@ int main() {
     test_string();
     test_person();
     test_resize();
-
+    test_copy_constructor();
+    test_copy_assignment();
     cout << "\nALL TESTS DONE\n";
     return 0;
 }
