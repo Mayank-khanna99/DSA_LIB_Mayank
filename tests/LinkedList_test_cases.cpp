@@ -229,6 +229,55 @@ int main() {
     cout << "Size : " << one.size() << endl;
     cout << "Empty : " << one.isEmpty() << endl;
 
+     cout << "\n==============================\n";
+    cout << "TEST 11 : Copy Assignment Operator\n";
+    cout << "==============================\n";
+
+    LinkedList<int> assign1;
+    assign1.push_back(1);
+    assign1.push_back(2);
+    assign1.push_back(3);
+
+    LinkedList<int> assign2;
+    assign2.push_back(100);
+    assign2.push_back(200);
+
+    cout << "Before assignment\n";
+
+    cout << "assign1 : ";
+    assign1.print();
+
+    cout << "\nassign2 : ";
+    assign2.print();
+
+    assign2 = assign1;
+
+    cout << "\n\nAfter assignment\n";
+
+    cout << "assign1 : ";
+    assign1.print();
+
+    cout << "\nassign2 : ";
+    assign2.print();
+
+    assign2.push_back(999);
+
+    cout << "\n\nAfter modifying assign2\n";
+
+    cout << "assign1 : ";
+    assign1.print();
+
+    cout << "\nassign2 : ";
+    assign2.print();
+
+    cout << endl;
+
+    // Self assignment
+    assign1 = assign1;
+
+    cout << "\nAfter self assignment\n";
+    assign1.print();
+    cout << endl;
 
     cout << "\n==============================\n";
     cout << "ALL TESTS COMPLETED\n";
