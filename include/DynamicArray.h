@@ -28,6 +28,40 @@ private:
         capacity=newcapacity;
     }
 public:
+    class Iterator{
+        private:
+            T* current;
+        public:
+            Iterator(T* ptr){
+                current=ptr;
+            }
+            T& operator*(){
+                return *current;
+            }
+             Iterator& operator++(){
+                current++;
+                return *this;
+            }
+
+            Iterator operator++(int){
+                Iterator temp = *this;
+                current++;
+                return temp;
+            }
+            Iterator& operator--(){
+                current--;
+                return *this;
+            }
+
+            bool operator!=(const Iterator& other){
+                return current != other.current;
+            }
+
+            bool operator==(const Iterator& other){
+                return current == other.current;
+            }
+    };
+
     DynamicArray(){
         size=0;
         capacity=1;
@@ -39,7 +73,14 @@ public:
         capacity=n;
         data = allocator.Allocate(capacity);
     }
-
+    DynamicArray(std::initializer_list<T> init){
+        size=0;
+        capacity=1;
+        data = allocator.Allocate(capacity);
+            for(const T& value:init){
+                append(value);
+            }
+    }
     DynamicArray(const DynamicArray& other) {
         size = other.size;
         capacity = other.capacity;
@@ -166,6 +207,14 @@ public:
             std::cout<< data[i] << " ";
         }
         std::cout << "\n";
+    }
+
+    Iterator begin(){
+        return Iterator(data);
+    }
+
+    Iterator end(){
+        return Iterator(data + size);
     }
     
     ~DynamicArray(){
