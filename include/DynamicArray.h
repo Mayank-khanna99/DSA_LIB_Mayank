@@ -19,7 +19,6 @@ private:
         for (size_t i = 0; i < size; i++) {
             allocator.Construct(newdata + i, data[i]);
         }
-
         for (size_t i = 0; i < size; i++) {
             allocator.Destroy(data + i);
         }
