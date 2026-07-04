@@ -88,6 +88,19 @@ class HashMap{
         }
     }
 
+    const V get(const K& key){
+        int bucket_index=hash(key);
+        auto& bucket=buckets[bucket_index];
+
+        for(auto it=bucket.begin(); it!=bucket.end();++it){
+            Entry *entry=*it;
+            if(entry->key  == key){
+                return (entry->value);
+            }
+        }
+        return "Not found";
+    }
+
     void print(){
         std::cout<<std::endl;
         for(int i=0;i<capacity;i++){
