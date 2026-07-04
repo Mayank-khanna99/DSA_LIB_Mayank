@@ -61,6 +61,21 @@ class HashMap{
         }
     }
 
+    HashMap(const HashMap& other): buckets(other.capacity){
+        size = 0;
+        capacity = other.capacity;
+        MAX_LOAD_FACTOR = other.MAX_LOAD_FACTOR;
+        for(int i = 0; i < capacity; i++){
+            buckets.append(LinkedList<Entry*>());
+        }
+        for(int i = 0; i < capacity; i++){
+            for(auto it = other.buckets[i].begin(); it != other.buckets[i].end(); ++it){
+                Entry* entry = *it;
+                put(entry->key, entry->value);
+            }
+        }
+    }
+
     int get_size(){
         return size;
     }
@@ -142,7 +157,7 @@ class HashMap{
         }
         return false;
     }
-    
+
     void clear(){
         for(int i = 0; i < capacity; i++){
             auto& bucket = buckets[i];
@@ -168,6 +183,35 @@ class HashMap{
         }
     }
     
+    HashMap& operator=(const HashMap& other){
+        if(this == &other)
+            return *this;
+        clear();
+        buckets.clear();
+
+        capacity = other.capacity;
+        size = 0;
+        MAX_LOAD_FACTOR = other.MAX_LOAD_FACTOR;
+
+        for(int i = 0; i < capacity; i++)
+        {
+            buckets.append(LinkedList<Entry*>());
+        }
+
+        for(int i = 0; i < capacity; i++)
+        {
+            for(auto it = other.buckets[i].begin();
+                it != other.buckets[i].end();
+                ++it)
+            {
+                Entry* entry = *it;
+                put(entry->key, entry->value);
+            }
+        }
+
+        return *this;
+    }
+
     ~HashMap(){
         std::cout<<"Destructor called";
         for (int i = 0; i < capacity; i++){
