@@ -28,7 +28,7 @@ class HashMap{
         return hasher(key) % capacity;
     }
 
-    double loadFactor(){
+    double loadFactor() const {
         return (double)size/capacity;
     }
 
@@ -77,10 +77,10 @@ class HashMap{
         }
     }
 
-    int get_size(){
+    int get_size() const {
         return size;
     }
-    int get_capacity(){
+    int get_capacity() const {
         return capacity;
     }
 
@@ -117,7 +117,23 @@ class HashMap{
         throw std::out_of_range("Key not found");
     }
 
-    bool containsKey(const K& key){
+    V* find(const K& key){
+        int bucket_index = hash(key);
+        auto& bucket = buckets[bucket_index];
+
+        for(auto it = bucket.begin(); it != bucket.end(); ++it)
+        {
+            Entry* entry = *it;
+
+            if(entry->key == key)
+            {
+                return &(entry->value);
+            }
+        }
+
+        return nullptr;
+    }
+    bool containsKey(const K& key) const {
         int bucket_index=hash(key);
         auto& bucket=buckets[bucket_index];
 
